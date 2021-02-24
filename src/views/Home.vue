@@ -1,18 +1,36 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+<div>
+  <div class="box">📣 {{ noticeBox}}</div>
+</div>
 </template>
 
-<script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+<script> 
+import { getNoticeBox } from '@/api/noticeBox'
 
 export default {
   name: 'Home',
+  data(){
+    return{
+      noticeBox: {
+      }
+    }
+  },
+  created(){
+    this.fetchNoticeBox()
+  },
+  methods: {
+    async  fetchNoticeBox(){
+        getNoticeBox().then( value => {
+          const {data} = value
+          this.noticeBox =  data.article
+          console.log(data.article);
+        }
+        )
+    }
+  },
+
   components: {
-    HelloWorld
-  }
+   
+  },
 }
 </script>
